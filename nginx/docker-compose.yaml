@@ -1,0 +1,9 @@
+web:
+  image: nginx
+  volumes:
+    - /home/sor/Desktop/docker/nginx/public_html:/usr/share/nginx/html:ro
+  ports:
+   - "8080:80"
+  environment:
+   - NGINX_HOST=dummy.co
+   - NGINX_PORT=80
