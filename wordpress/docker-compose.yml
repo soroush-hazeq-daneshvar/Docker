@@ -1,0 +1,46 @@
+---
+version: '3.8'
+services:
+  web: 
+    container_name: webwp
+    image : wordpress:latest
+    volumes: ['./:/var/www/html']
+    networks:
+      - wpsite
+    depends_on:
+      - mariadb
+    environment:
+       WORDPRESS_DB_USER: 'wp@localhost'
+       WORDPRESS_DB_PASSWORD: 0221killer.sd
+       WORDPRESS_DB_NAME: mysite
+       WORDPRESS_DB_HOST: mariadb:3306
+    ports:
+      - 8081:80
+  phpmyadmin:
+    container_name: phpadmin
+    depends_on:
+      - mariadb
+    image: phpmyadmin/phpmyadmin
+    ports:
+     - '8080:80'
+    environment:
+     PMA_HOST: mysite
+     MYSQL_ROOT_PASSWORD: 0221killer.sd
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.10.1-rc-jammy
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - wpsite
+    ports:
+      - 3306:3306
+    environment:
+       MARIADB_ROOT_PASSWORD: 0221killer.sd
+       MARIADB_DATABASE: mysite
+       MYSQL_USER: 'wp@localhost'
+       MYSQL_PASSWORD: 0221killer.sd
+networks:
+  wpsite:
+volumes:
+  mariadb: 
