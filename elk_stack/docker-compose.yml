@@ -1,7 +1,7 @@
 version: '3'
 services:
   elasticsearch:
-    image: elasticelasticsearch:7.14.2
+    image: elastic/elasticsearch:7.14.2
     container_name: elasticsearch
     environment:
       - node.name=elasticsearch
@@ -42,6 +42,7 @@ services:
   logstash:
     image: elastic/logstash:7.14.2
     container_name: logstash
+    user: root
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline/
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
