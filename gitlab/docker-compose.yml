@@ -1,13 +1,21 @@
 version: '3.6'
+
 services:
-  web:
-    image: 'gitlab/gitlab-ce:latest'
+  gitlab:
+    image: gitlab/gitlab-ce:latest
     restart: always
-    hostname: 'gitlab.hazeq.ir'
+    hostname: gitlab.hazeq.ir
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.hazeq.ir'
-        # Add any other gitlab.rb configuration here, each on its own line
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "smtps.sbmu.ac.ir"
+        gitlab_rails['smtp_port'] = 587
+        gitlab_rails['smtp_user_name'] = "s.hazeq@sbmu.ac.ir"
+        gitlab_rails['smtp_password'] = "0221killer.sd"
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_tls'] = false
     ports:
       - '80:80'
       - '443:443'
@@ -16,4 +24,6 @@ services:
       - '$GITLAB_HOME/config:/etc/gitlab'
       - '$GITLAB_HOME/logs:/var/log/gitlab'
       - '$GITLAB_HOME/data:/var/opt/gitlab'
-    shm_size: '256m'
+    tmpfs:
+      - /tmp
+    shm_size: '1gb'
