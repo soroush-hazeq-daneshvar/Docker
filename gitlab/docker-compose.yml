@@ -12,7 +12,7 @@ services:
         gitlab_rails['smtp_address'] = "smtps.sbmu.ac.ir"
         gitlab_rails['smtp_port'] = 587
         gitlab_rails['smtp_user_name'] = "s.hazeq@sbmu.ac.ir"
-        gitlab_rails['smtp_password'] = "0221killer.sd"
+        gitlab_rails['smtp_password'] = "somepassword"
         gitlab_rails['smtp_authentication'] = "login"
         gitlab_rails['smtp_enable_starttls_auto'] = true
         gitlab_rails['smtp_tls'] = false
@@ -21,17 +21,17 @@ services:
       - '443:443'
       - '22:22'
     volumes:
-      - '$GITLAB_HOME/config:/etc/gitlab'
-      - '$GITLAB_HOME/logs:/var/log/gitlab'
-      - '$GITLAB_HOME/data:/var/opt/gitlab'
+      - '/srv/gitlab/config:/etc/gitlab'
+      - '/srv/gitlab/logs:/var/log/gitlab'
+      - '/srv/gitlab/data:/var/opt/gitlab'
     tmpfs:
       - /tmp
     shm_size: '1gb'
+
   gitlab-runner:
     image: gitlab/gitlab-runner:latest
-    container_name: gitlab-runner  
+    container_name: gitlab-runner
     restart: always
-    vloumes:
+    volumes:
       - '/srv/gitlab-runner/config:/etc/gitlab-runner'
       - '/var/run/docker.sock:/var/run/docker.sock'
-
