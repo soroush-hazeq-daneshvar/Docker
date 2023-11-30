@@ -52,19 +52,6 @@ services:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
 
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    ports:
-      - 8080:8080
-    restart: always
-    deploy:
-      mode: global
-
   grafana:
     image: grafana/grafana
     user: '472'
